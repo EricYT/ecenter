@@ -54,7 +54,7 @@ handle_info(timeout, State) ->
       case Id =:= Leader of
         true ->
           %% Leader is me
-          safy_sup_start();
+          safe_service_start();
         false ->
           ignore
       end;
@@ -74,4 +74,23 @@ code_change(_OldVsn, State, _Extra) ->
 %% ------------------------------------------------------------------
 %% Internal Function Definitions
 %% ------------------------------------------------------------------
+safe_service_start() ->
+  %% get services
+  Services          = [],
+  %% Already start do not to start it
+  AlreadyStarted    = filter_already_start(Servics, []),
+  NeedStartServices = Services -- AlreadyStarted,
+  start_services(NeedStartServices).
 
+start_services([Service|Tail]) ->
+  try
+    start_service(Service)
+  catch Error:Reason ->
+          lager:error("ecenter error:~p Response:~p tracestack:~p", [
+                                                                     Error,
+                                                                     Reason,
+                                                                     erlang:get_stacktrace()
+                                                                    ]),
+          error
+  end;
+start_service([]) -> ok.
