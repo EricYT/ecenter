@@ -6,6 +6,7 @@
   {applications, [
                   kernel,
                   stdlib,
+                  lager,
                   etcd,
                   jiffy,
                   ej,

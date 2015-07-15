@@ -23,6 +23,7 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
+  lager:info("ecenter_sup start"),
   %% center server
   CenterServer = ?CHILD(ecenter, worker),
   {ok, { {one_for_one, 5, 10}, [CenterServer]} }.
