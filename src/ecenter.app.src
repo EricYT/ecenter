@@ -1,0 +1,16 @@
+{application, ecenter,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  etcd,
+                  jiffy,
+                  ej,
+                  lhttpc
+                 ]},
+  {mod, { ecenter_app, []}},
+  {env, []}
+ ]}.
